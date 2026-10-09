@@ -1,14 +1,17 @@
 {
   "short_name": "D&D Helper",
-  "name": "D&D 5e Character & Rules Companion",
+  "name": "D&D 5e Helper - Крисарій",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "./favicon.svg",
       "type": "image/svg+xml",
-      "sizes": "512x512"
+      "sizes": "192x192 512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
+  "id": "./",
   "background_color": "#090d16",
   "theme_color": "#090d16",
   "display": "standalone",
