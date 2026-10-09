@@ -42,7 +42,7 @@ interface CharacterContextType {
   toggleTheme: () => void;
 }
 
-const STORAGE_KEY = 'dnd_helper_character_v2';
+const STORAGE_KEY = 'dnd_helper_character_v3';
 const ROLLS_STORAGE_KEY = 'dnd_helper_rolls_v1';
 const THEME_STORAGE_KEY = 'dnd_helper_theme';
 

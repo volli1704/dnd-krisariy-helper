@@ -124,7 +124,7 @@ export const DEFAULT_CHARACTER: Character = {
   spells: [],
 
   activeConditions: [],
-  favoriteFeatureIds: ['ft_second_wind', 'ft_action_surge', 'ft_extra_attack_1', 'mech_flurry'],
+  favoriteFeatureIds: ['ft_flurry', 'ft_second_wind', 'ft_action_surge', 'ft_extra_attack_1'],
 
   inventory: [
     {
