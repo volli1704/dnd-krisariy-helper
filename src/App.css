@@ -3232,6 +3232,39 @@
   align-items: center;
 }
 
+.psi-skill-card-top.clickable {
+  cursor: pointer;
+  padding: 4px 6px;
+  margin: -4px -6px;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s ease;
+}
+
+.psi-skill-card-top.clickable:hover {
+  background: var(--bg-surface-elevated);
+}
+
+.btn-expand-rules {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.psi-skill-card-top.clickable:hover .btn-expand-rules,
+.btn-expand-rules:hover {
+  border-color: var(--border-gold);
+  color: var(--color-gold);
+}
+
 .skill-icon-name {
   display: flex;
   align-items: center;
@@ -3254,6 +3287,104 @@
   font-size: 11px;
   color: var(--text-secondary);
   line-height: 1.35;
+}
+
+/* Expandable Rules Drawer */
+.psi-skill-rules-drawer {
+  margin-top: 6px;
+  padding: 10px;
+  background: var(--bg-app);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rules-section-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+}
+
+.rules-section-item.yellow {
+  border-left: 3px solid #eab308;
+}
+
+.rules-section-item.blue {
+  border-left: 3px solid #3b82f6;
+}
+
+.rules-section-item.black {
+  border-left: 3px solid #64748b;
+}
+
+.rules-section-item p {
+  margin: 0;
+}
+
+.rules-section-item ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rules-section-item li {
+  margin: 0;
+}
+
+.rules-section-item code {
+  background: var(--bg-surface-elevated);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  color: var(--color-gold);
+  border: 1px solid var(--border-subtle);
+}
+
+.rule-badge-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.rule-badge-tag.base {
+  background: var(--bg-surface-elevated);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.rule-badge-tag.yellow {
+  background: rgba(234, 179, 8, 0.15);
+  color: #eab308;
+  border: 1px solid rgba(234, 179, 8, 0.35);
+}
+
+.rule-badge-tag.blue {
+  background: rgba(59, 130, 246, 0.15);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+}
+
+.rule-badge-tag.black {
+  background: rgba(100, 116, 139, 0.2);
+  color: #94a3b8;
+  border: 1px solid rgba(100, 116, 139, 0.4);
 }
 
 .skill-action-buttons-dual {
