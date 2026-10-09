@@ -17,6 +17,19 @@ export interface ClassFeature {
 
 export const FIGHTER_CLASS_FEATURES: ClassFeature[] = [
   {
+    id: 'ft_flurry',
+    name: 'Flurry (Шквал ударів)',
+    nameUk: 'Шквал ударів (Flurry)',
+    level: 1,
+    source: 'Талант персонажа (Krysarii Feat)',
+    actionType: 'bonus',
+    resetOn: 'none',
+    summaryUk: 'Особливий бойовий талант: швидка нищівна серія подвійних атак двома зброями (Бойова сокира + Молот).',
+    descriptionUk: 'Особливий бойовий талант Крисарія. При атаці основною зброєю (Бойова сокира) ви можете бонусною дією завдати удару другою зброєю (Бойовий молот), додаючи модифікатор Сили до шкоди обох атак. Забезпечує високу щільність атак та комбінацію рублячої і дроблячої шкоди.',
+    descriptionEn: 'Krysarii’s signature dual-wield combat talent. Allows delivering swift follow-up strikes when wielding Battleaxe and Warhammer simultaneously, adding full Strength modifier to damage on both attacks.',
+    isFavorite: true
+  },
+  {
     id: 'ft_fighting_style',
     name: 'Fighting Style',
     nameUk: 'Бойовий стиль (Fighting Style)',

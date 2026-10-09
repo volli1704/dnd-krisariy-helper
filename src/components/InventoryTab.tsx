@@ -107,56 +107,37 @@ export const InventoryTab: React.FC = () => {
           </span>
         </div>
 
-        {/* Currency coins row */}
-        <div className="currency-grid">
-          <div className="coin-box cp">
-            <span className="coin-label">CP (Мідь)</span>
-            <input
-              type="number"
-              value={character.currency.cp}
-              onChange={e => handleCurrencyChange('cp', e.target.value)}
-              className="coin-input"
-            />
+        {/* Gold Only Purse row */}
+        <div className="gold-purse-container">
+          <div className="gold-main-display">
+            <div className="gold-icon-title">
+              <span className="gold-coin-symbol">🪙</span>
+              <div className="gold-text-meta">
+                <span className="gold-title-label">Золото (GP)</span>
+                <span className="gold-subtitle-hint">Основна ігрова валюта</span>
+              </div>
+            </div>
+
+            <div className="gold-input-box">
+              <input
+                type="number"
+                min="0"
+                value={character.currency.gp}
+                onChange={e => handleCurrencyChange('gp', e.target.value)}
+                className="gold-large-input"
+              />
+              <span className="gold-unit-tag">GP</span>
+            </div>
           </div>
 
-          <div className="coin-box sp">
-            <span className="coin-label">SP (Срібло)</span>
-            <input
-              type="number"
-              value={character.currency.sp}
-              onChange={e => handleCurrencyChange('sp', e.target.value)}
-              className="coin-input"
-            />
-          </div>
-
-          <div className="coin-box ep">
-            <span className="coin-label">EP (Електрум)</span>
-            <input
-              type="number"
-              value={character.currency.ep}
-              onChange={e => handleCurrencyChange('ep', e.target.value)}
-              className="coin-input"
-            />
-          </div>
-
-          <div className="coin-box gp">
-            <span className="coin-label">GP (Золото)</span>
-            <input
-              type="number"
-              value={character.currency.gp}
-              onChange={e => handleCurrencyChange('gp', e.target.value)}
-              className="coin-input"
-            />
-          </div>
-
-          <div className="coin-box pp">
-            <span className="coin-label">PP (Платина)</span>
-            <input
-              type="number"
-              value={character.currency.pp}
-              onChange={e => handleCurrencyChange('pp', e.target.value)}
-              className="coin-input"
-            />
+          <div className="gold-quick-actions">
+            <button type="button" className="gold-adj-btn minus" onClick={() => handleCurrencyChange('gp', String(Math.max(0, character.currency.gp - 10)))}>-10</button>
+            <button type="button" className="gold-adj-btn minus" onClick={() => handleCurrencyChange('gp', String(Math.max(0, character.currency.gp - 5)))}>-5</button>
+            <button type="button" className="gold-adj-btn minus" onClick={() => handleCurrencyChange('gp', String(Math.max(0, character.currency.gp - 1)))}>-1</button>
+            <button type="button" className="gold-adj-btn plus" onClick={() => handleCurrencyChange('gp', String(character.currency.gp + 1))}>+1</button>
+            <button type="button" className="gold-adj-btn plus" onClick={() => handleCurrencyChange('gp', String(character.currency.gp + 5))}>+5</button>
+            <button type="button" className="gold-adj-btn plus" onClick={() => handleCurrencyChange('gp', String(character.currency.gp + 10))}>+10</button>
+            <button type="button" className="gold-adj-btn plus" onClick={() => handleCurrencyChange('gp', String(character.currency.gp + 50))}>+50</button>
           </div>
         </div>
 

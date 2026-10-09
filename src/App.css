@@ -1704,46 +1704,115 @@
 /* =========================================
    6. INVENTORY TAB
    ========================================= */
-.currency-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-}
-
-.coin-box {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 6px 4px;
+.gold-purse-container {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.gold-main-display {
+  display: flex;
   align-items: center;
-  gap: 2px;
+  justify-content: space-between;
+  gap: 12px;
 }
 
-.coin-label {
-  font-size: 9px;
+.gold-icon-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gold-coin-symbol {
+  font-size: 26px;
+  filter: drop-shadow(0 2px 4px rgba(245, 158, 11, 0.3));
+}
+
+.gold-text-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.gold-title-label {
+  font-family: var(--font-heading);
   font-weight: 700;
-  color: var(--text-muted);
+  font-size: 15px;
+  color: var(--gold-400);
 }
 
-.coin-input {
-  width: 100%;
+.gold-subtitle-hint {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.gold-input-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+}
+
+.gold-large-input {
+  width: 90px;
   background: transparent;
   border: none;
-  text-align: center;
   font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: 800;
+  font-size: 18px;
   color: var(--text-primary);
+  text-align: right;
   outline: none;
 }
 
-.coin-box.gp {
-  border-color: var(--border-gold);
-}
-.coin-box.gp .coin-label {
+.gold-unit-tag {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 13px;
   color: var(--gold-400);
+}
+
+.gold-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 8px;
+}
+
+.gold-adj-btn {
+  flex: 1;
+  min-width: 36px;
+  padding: 4px 0;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  transition: all 0.15s ease;
+}
+
+.gold-adj-btn.minus {
+  color: var(--crimson-400);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.gold-adj-btn.plus {
+  color: var(--emerald-400);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.gold-adj-btn:active {
+  transform: scale(0.95);
 }
 
 .encumbrance-container {

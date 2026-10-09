@@ -521,5 +521,25 @@ export const RULES_DATABASE: RuleEntry[] = [
     ],
     tags: ['glossary', 'items', 'magic'],
     source: '5e.tools / DMG p.136'
+  },
+  {
+    id: 'term_flurry',
+    name: 'Flurry (Шквал ударів)',
+    nameUk: 'Шквал ударів (Flurry)',
+    category: 'glossary',
+    shortSummary: 'Special rapid dual-wielding attack technique for Krysarii: deliver rapid strikes with Battleaxe & Warhammer.',
+    shortSummaryUk: 'Особливий бойовий талант Крисарія: швидка нищівна серія ударів сокирою та молотом двома руками.',
+    bullets: [
+      'Allows executing fluid, rapid double-strikes when wielding Battleaxe and Warhammer simultaneously.',
+      'Synergizes with Extra Attack and Action Surge to unleash a devastating barrage of slashing and bludgeoning damage.',
+      'Enables maximizing pressure in close-quarters combat while alternating damage types against resistant foes.'
+    ],
+    bulletsUk: [
+      'Дозволяє здійснювати блискавичні подвійні удари при одночасному володінні Бойовою сокирою (Battleaxe) та Бойовим молотом (Warhammer).',
+      'Ідеально синергує з Додатковою атакою (Extra Attack) та Сплеском дій (Action Surge), наносячи комбіновану рублячу та дроблячу шкоду.',
+      'Дозволяє гнучко адаптувати тип шкоди залежно від стійкостей та вразливостей супротивника в ближньому бою.'
+    ],
+    tags: ['glossary', 'flurry', 'combat', 'krysarii', 'talent'],
+    source: 'Krysarii Custom Mechanics / 5e.tools'
   }
 ];
