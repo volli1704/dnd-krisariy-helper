@@ -1582,29 +1582,63 @@
   gap: 8px;
 }
 
-.skill-prof-indicator {
-  width: 16px;
+.skill-prof-indicator-btn {
+  background: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  border-radius: var(--radius-full);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  padding: 0;
+}
+
+.skill-prof-indicator-btn:hover {
+  transform: scale(1.2);
+  background: rgba(245, 158, 11, 0.15);
+}
+
+.skill-prof-indicator-btn:active {
+  transform: scale(0.9);
 }
 
 .icon-star-gold {
   color: var(--gold-400);
+  fill: var(--gold-400);
 }
 
 .prof-bullet-filled {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: var(--radius-full);
   background: var(--gold-400);
+  box-shadow: 0 0 6px rgba(245, 158, 11, 0.5);
 }
 
 .prof-bullet-empty {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--text-muted);
+  border: 1.5px solid var(--text-muted);
+}
+
+.save-prof-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: transform 0.15s ease;
+}
+
+.save-prof-dot:hover {
+  transform: scale(1.25);
+  color: var(--gold-400);
 }
 
 .skill-names-group {

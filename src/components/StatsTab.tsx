@@ -5,7 +5,7 @@ import type { AbilityName, Skill } from '../types/character';
 import { Shield, Eye, Search, Dices, Star, Check } from 'lucide-react';
 
 export const StatsTab: React.FC = () => {
-  const { character, triggerRoll } = useCharacter();
+  const { character, updateCharacter, triggerRoll } = useCharacter();
   const [skillSearch, setSkillSearch] = useState('');
 
   const abilitiesList: AbilityName[] = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
@@ -27,9 +27,40 @@ export const StatsTab: React.FC = () => {
     triggerRoll(1, 20, mod, `Рятівний кидок: ${character.abilities[ability].fullNameUk} (${ability} Save)`);
   };
 
+  const handleToggleSaveProficiency = (e: React.MouseEvent, ability: AbilityName) => {
+    e.stopPropagation();
+    updateCharacter(prev => ({
+      ...prev,
+      abilities: {
+        ...prev.abilities,
+        [ability]: {
+          ...prev.abilities[ability],
+          proficientSave: !prev.abilities[ability].proficientSave
+        }
+      }
+    }));
+  };
+
   const handleSkillRoll = (skill: Skill) => {
     const mod = calculateSkillModifier(character, skill.ability, skill.proficiencyLevel, skill.customBonus);
     triggerRoll(1, 20, mod, `Навичка: ${skill.nameUk} (${skill.name})`);
+  };
+
+  const handleCycleSkillProficiency = (e: React.MouseEvent, skillId: string) => {
+    e.stopPropagation();
+    updateCharacter(prev => ({
+      ...prev,
+      skills: prev.skills.map(sk => {
+        if (sk.id === skillId) {
+          let nextLevel: Skill['proficiencyLevel'] = 'none';
+          if (sk.proficiencyLevel === 'none') nextLevel = 'proficient';
+          else if (sk.proficiencyLevel === 'proficient') nextLevel = 'expertise';
+          else if (sk.proficiencyLevel === 'expertise') nextLevel = 'none';
+          return { ...sk, proficiencyLevel: nextLevel };
+        }
+        return sk;
+      })
+    }));
   };
 
   return (
@@ -41,7 +72,7 @@ export const StatsTab: React.FC = () => {
             <Shield size={18} className="text-gold" />
             <h2 className="card-title">Характеристики (Ability Scores)</h2>
           </div>
-          <span className="card-hint-text">Натисніть для кидка перевірки</span>
+          <span className="card-hint-text">Натисніть на картку для кидка</span>
         </div>
 
         <div className="abilities-hex-grid">
@@ -73,10 +104,16 @@ export const StatsTab: React.FC = () => {
                       e.stopPropagation();
                       handleSaveRoll(abKey);
                     }}
-                    title={`Рятівний кидок: ${formatModifier(saveMod)}`}
+                    title={`Рятівний кидок: ${formatModifier(saveMod)}. Натисніть галочку праворуч для зміни володіння.`}
                   >
                     <span>Спас: {formatModifier(saveMod)}</span>
-                    {ab.proficientSave && <Check size={10} />}
+                    <span 
+                      className="save-prof-dot" 
+                      onClick={(e) => handleToggleSaveProficiency(e, abKey)}
+                      title={ab.proficientSave ? "Володіння спасом активне. Натисніть, щоб вимкнути" : "Натисніть, щоб увімкнути володіння спасом"}
+                    >
+                      {ab.proficientSave ? <Check size={11} /> : '○'}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -90,7 +127,10 @@ export const StatsTab: React.FC = () => {
         <div className="card-header">
           <div className="card-title-group">
             <Dices size={18} className="text-purple" />
-            <h2 className="card-title">Навички (Skills)</h2>
+            <div>
+              <h2 className="card-title">Навички (Skills)</h2>
+              <p className="card-subtitle">Натисніть на значок зліва для зміни володіння: ⚪ Немає ➔ 🟢 Володіння ➔ ⭐ Експертиза</p>
+            </div>
           </div>
           <span className="card-badge">Всього: 18</span>
         </div>
@@ -120,11 +160,22 @@ export const StatsTab: React.FC = () => {
                 onClick={() => handleSkillRoll(skill)}
               >
                 <div className="skill-left">
-                  <div className="skill-prof-indicator">
-                    {isExpert && <Star size={14} className="icon-star-gold" />}
+                  <button
+                    type="button"
+                    className="skill-prof-indicator-btn"
+                    onClick={(e) => handleCycleSkillProficiency(e, skill.id)}
+                    title={
+                      isExpert 
+                        ? "Експертиза (+2xPB). Натисніть, щоб скинути."
+                        : isProf 
+                        ? "Володіння (+PB). Натисніть для Експертизи."
+                        : "Немає володіння. Натисніть, щоб додати володіння."
+                    }
+                  >
+                    {isExpert && <Star size={15} className="icon-star-gold" />}
                     {isProf && <div className="prof-bullet-filled" />}
                     {!isProf && !isExpert && <div className="prof-bullet-empty" />}
-                  </div>
+                  </button>
 
                   <div className="skill-names-group">
                     <span className="skill-name-uk">{skill.nameUk}</span>
@@ -134,7 +185,7 @@ export const StatsTab: React.FC = () => {
 
                 <div className="skill-right">
                   <span className="skill-ability-tag">{skill.ability}</span>
-                  <div className="skill-mod-button">
+                  <div className="skill-mod-button" title="Кинути перевірку навички">
                     <span>{formatModifier(mod)}</span>
                   </div>
                 </div>
