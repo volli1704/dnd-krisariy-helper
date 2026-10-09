@@ -1,19 +1,36 @@
 {
   "short_name": "D&D Helper",
   "name": "D&D 5e Helper - Крисарій",
+  "id": "dnd-helper-krysarii",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#090d16",
+  "orientation": "portrait",
   "icons": [
+    {
+      "src": "./icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    },
     {
       "src": "./favicon.svg",
       "type": "image/svg+xml",
-      "sizes": "192x192 512x512",
-      "purpose": "any maskable"
+      "sizes": "any"
     }
-  ],
-  "start_url": "./",
-  "scope": "./",
-  "id": "./",
-  "background_color": "#090d16",
-  "theme_color": "#090d16",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }
