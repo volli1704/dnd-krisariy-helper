@@ -4047,33 +4047,147 @@
   line-height: 1.5;
 }
 
-/* Note Modal Content Styling */
-.note-modal-content {
-  max-width: 540px;
-  width: 100%;
-  box-sizing: border-box;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-gold);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  gap: 16px;
-  overflow-y: auto;
-}
-
-.note-form {
+/* =========================================
+   NOTE FULLSCREEN EDITOR (PORTAL)
+   ========================================= */
+.note-editor-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--bg-primary);
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  overflow: hidden;
+}
+
+.note-editor-container {
+  width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0px)) 14px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.note-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.note-editor-back-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+}
+
+.note-editor-back-btn:hover {
+  background: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+.note-editor-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.note-editor-title {
+  font-family: var(--font-heading);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.note-editor-top-save-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-500);
+  color: #090d16;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(217, 119, 6, 0.3);
+  transition: transform 0.1s ease, filter 0.15s ease;
+}
+
+.note-editor-top-save-btn:active {
+  transform: scale(0.96);
+}
+
+.note-editor-form {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
   width: 100%;
   box-sizing: border-box;
 }
 
-.note-category-select-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+.note-editor-field {
   width: 100%;
   box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.note-editor-title-input {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.note-editor-title-input:focus {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
+}
+
+.note-editor-category-bar {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.note-editor-category-bar::-webkit-scrollbar {
+  display: none;
 }
 
 .note-cat-select-btn {
@@ -4090,6 +4204,7 @@
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
+  white-space: nowrap;
 }
 
 .note-cat-select-btn:hover {
@@ -4106,10 +4221,61 @@
   box-shadow: 0 0 10px rgba(217, 119, 6, 0.35);
 }
 
-.note-modal-textarea {
-  min-height: 140px;
-  line-height: 1.55;
-  resize: vertical;
+.note-editor-content-field {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.note-editor-textarea {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  box-sizing: border-box;
+  resize: none;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.note-editor-textarea:focus {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
+}
+
+.note-editor-bottom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.note-pin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.note-editor-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .note-card .note-title {
@@ -4120,6 +4286,29 @@
 .note-card .note-content {
   overflow-wrap: anywhere;
   word-break: break-word;
+}
+
+/* Desktop Modal Upgrade (>= 768px) */
+@media (min-width: 768px) {
+  .note-editor-overlay {
+    backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.75);
+    padding: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .note-editor-container {
+    width: 100%;
+    max-width: 640px;
+    height: 86vh;
+    max-height: 740px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-gold);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-lg), 0 0 30px rgba(217, 119, 6, 0.15);
+    padding: 20px;
+  }
 }
 
 /* Light Theme Support */
@@ -4148,9 +4337,17 @@
   color: #334155;
 }
 
-[data-theme="light"] .note-modal-content {
+[data-theme="light"] .note-editor-overlay,
+[data-theme="light"] .note-editor-container {
   background: #ffffff;
-  border-color: var(--gold-500);
 }
+
+[data-theme="light"] .note-editor-title-input,
+[data-theme="light"] .note-editor-textarea {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
 
 

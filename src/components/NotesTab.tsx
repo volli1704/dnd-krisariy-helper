@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useCharacter } from '../context/CharacterContext';
 import type { NoteBlock } from '../types/character';
 import { 
@@ -17,7 +18,9 @@ import {
   Users,
   Compass,
   Coins,
-  Bookmark
+  Bookmark,
+  ArrowLeft,
+  Save
 } from 'lucide-react';
 
 const CATEGORIES = [
@@ -312,35 +315,50 @@ export const NotesTab: React.FC = () => {
         )}
       </div>
 
-      {/* Add / Edit Note Modal */}
-      {isModalOpen && (
-        <div className="modal-backdrop animate-fadeIn" onClick={() => setIsModalOpen(false)}>
+      {/* Fullscreen Mobile & Modal Desktop Note Editor */}
+      {isModalOpen && createPortal(
+        <div className="note-editor-overlay animate-fadeIn" onClick={() => setIsModalOpen(false)}>
           <div 
-            className="modal-content note-modal-content"
+            className="note-editor-container"
             onClick={e => e.stopPropagation()}
           >
-            <div className="modal-header">
-              <div className="modal-title-with-icon">
-                <FileText size={20} className="text-gold" />
-                <h3 className="modal-title">{editingNoteId ? 'Редагувати нотатку' : 'Нова нотатка'}</h3>
-              </div>
+            {/* Top Editor Bar */}
+            <div className="note-editor-header">
               <button 
-                className="modal-close-btn"
+                className="note-editor-back-btn"
                 onClick={() => setIsModalOpen(false)}
                 type="button"
-                aria-label="Закрити"
+                aria-label="Назад"
+                title="Назад"
               >
-                <X size={18} />
+                <ArrowLeft size={20} />
+              </button>
+              
+              <div className="note-editor-title-group">
+                <FileText size={18} className="text-gold" />
+                <h3 className="note-editor-title">
+                  {editingNoteId ? 'Редагувати нотатку' : 'Нова нотатка'}
+                </h3>
+              </div>
+
+              <button 
+                className="note-editor-top-save-btn"
+                onClick={handleSaveNote}
+                type="button"
+              >
+                <Save size={16} />
+                <span>Зберегти</span>
               </button>
             </div>
 
-            <form onSubmit={handleSaveNote} className="modal-form note-form">
-              <div className="form-group">
-                <label>Заголовок нотатки</label>
+            {/* Note Editor Form */}
+            <form onSubmit={handleSaveNote} className="note-editor-form">
+              {/* Title input */}
+              <div className="note-editor-field">
                 <input
                   type="text"
-                  className="modal-input"
-                  placeholder="Наприклад: Розмова з капітаном варти, Загадка на брамі..."
+                  className="note-editor-title-input"
+                  placeholder="Заголовок нотатки..."
                   value={formTitle}
                   onChange={e => setFormTitle(e.target.value)}
                   autoFocus
@@ -348,63 +366,62 @@ export const NotesTab: React.FC = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label>Категорія</label>
-                <div className="note-category-select-grid">
-                  {CATEGORIES.filter(c => c.id !== 'all').map(cat => (
-                    <button
-                      type="button"
-                      key={cat.id}
-                      className={`note-cat-select-btn ${formCategory === cat.id ? 'active' : ''}`}
-                      onClick={() => setFormCategory(cat.id)}
-                    >
-                      {cat.icon}
-                      <span>{cat.label}</span>
-                    </button>
-                  ))}
-                </div>
+              {/* Categories scroll row */}
+              <div className="note-editor-category-bar">
+                {CATEGORIES.filter(c => c.id !== 'all').map(cat => (
+                  <button
+                    type="button"
+                    key={cat.id}
+                    className={`note-cat-select-btn ${formCategory === cat.id ? 'active' : ''}`}
+                    onClick={() => setFormCategory(cat.id)}
+                  >
+                    {cat.icon}
+                    <span>{cat.label}</span>
+                  </button>
+                ))}
               </div>
 
-              <div className="form-group">
-                <label>Вміст нотатки</label>
+              {/* Text content area */}
+              <div className="note-editor-content-field">
                 <textarea
-                  className="modal-textarea note-modal-textarea"
-                  placeholder="Запишіть деталі, координати, імена персонажів, плани чи здобич..."
-                  rows={6}
+                  className="note-editor-textarea"
+                  placeholder="Записуйте деталі подій, діалоги NPC, підказки, координати чи здобич..."
                   value={formContent}
                   onChange={e => setFormContent(e.target.value)}
                 />
               </div>
 
-              <div className="form-group checkbox-group">
-                <label className="checkbox-label">
+              {/* Bottom bar with Pin toggle and actions */}
+              <div className="note-editor-bottom-bar">
+                <label className="checkbox-label note-pin-toggle">
                   <input
                     type="checkbox"
                     checked={formIsPinned}
                     onChange={e => setFormIsPinned(e.target.checked)}
                   />
-                  <span>Закріпити нотатку зверху списку (Pinned)</span>
+                  <span>Закріпити зверху</span>
                 </label>
-              </div>
 
-              <div className="modal-actions-row">
-                <button
-                  type="button"
-                  className="btn-cancel"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  Скасувати
-                </button>
-                <button
-                  type="submit"
-                  className="btn-save"
-                >
-                  {editingNoteId ? 'Зберегти зміни' : 'Створити нотатку'}
-                </button>
+                <div className="note-editor-actions-row">
+                  <button
+                    type="button"
+                    className="btn-cancel"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Скасувати
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn-save"
+                  >
+                    {editingNoteId ? 'Зберегти зміни' : 'Створити'}
+                  </button>
+                </div>
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
