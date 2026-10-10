@@ -7,6 +7,7 @@ import type { TabType } from './components/Navigation';
 import { SpellsTab } from './components/SpellsTab';
 import { StatsTab } from './components/StatsTab';
 import { InventoryTab } from './components/InventoryTab';
+import { NotesTab } from './components/NotesTab';
 import { RulesGlossaryTab } from './components/RulesGlossaryTab';
 import { DiceDrawer } from './components/DiceDrawer';
 
@@ -23,6 +24,7 @@ export const AppContent: React.FC = () => {
         {activeTab === 'spells' && <SpellsTab />}
         {activeTab === 'stats' && <StatsTab />}
         {activeTab === 'inventory' && <InventoryTab />}
+        {activeTab === 'notes' && <NotesTab />}
         {activeTab === 'rules' && <RulesGlossaryTab />}
       </main>
 

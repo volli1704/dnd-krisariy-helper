@@ -95,6 +95,16 @@ export interface Currency {
   pp: number;
 }
 
+export interface NoteBlock {
+  id: string;
+  title: string;
+  content: string;
+  category?: 'general' | 'quest' | 'npc' | 'location' | 'loot' | string;
+  createdAt: number;
+  updatedAt?: number;
+  isPinned?: boolean;
+}
+
 export interface Character {
   id: string;
   name: string;
@@ -169,4 +179,6 @@ export interface Character {
     special?: string;
   };
   notes: string;
+  notesList?: NoteBlock[];
 }
+

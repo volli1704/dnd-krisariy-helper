@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import type { Character, InventoryItem } from '../types/character';
+import type { Character, InventoryItem, NoteBlock } from '../types/character';
 import type { RollResult } from '../types/rules';
 import { DEFAULT_CHARACTER } from '../data/defaultCharacter';
 import { executeRoll } from '../utils/dndUtils';
@@ -24,6 +24,10 @@ interface CharacterContextType {
   toggleEquipItem: (id: string) => void;
   toggleAttuneItem: (id: string) => void;
   toggleFavoriteFeature: (featureId: string) => void;
+  addNote: (note: { title: string; content: string; category?: string; isPinned?: boolean }) => void;
+  updateNote: (id: string, updated: Partial<NoteBlock>) => void;
+  deleteNote: (id: string) => void;
+  togglePinNote: (id: string) => void;
   exportCharacterJson: () => string;
   importCharacterJson: (jsonString: string) => boolean;
   resetToDefault: () => void;
@@ -63,7 +67,11 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (!parsed.notesList) {
+          parsed.notesList = DEFAULT_CHARACTER.notesList || [];
+        }
+        return parsed;
       }
     } catch (e) {
       console.error('Failed to load character from storage', e);
@@ -403,6 +411,46 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     });
   };
 
+  const addNote = (note: { title: string; content: string; category?: string; isPinned?: boolean }) => {
+    const newNote: NoteBlock = {
+      id: 'note_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
+      title: note.title.trim() || 'Без назви',
+      content: note.content,
+      category: note.category || 'general',
+      createdAt: Date.now(),
+      isPinned: note.isPinned ?? false
+    };
+    setCharacter(prev => ({
+      ...prev,
+      notesList: [newNote, ...(prev.notesList || [])]
+    }));
+  };
+
+  const updateNote = (id: string, updated: Partial<NoteBlock>) => {
+    setCharacter(prev => ({
+      ...prev,
+      notesList: (prev.notesList || []).map(note =>
+        note.id === id ? { ...note, ...updated, updatedAt: Date.now() } : note
+      )
+    }));
+  };
+
+  const deleteNote = (id: string) => {
+    setCharacter(prev => ({
+      ...prev,
+      notesList: (prev.notesList || []).filter(note => note.id !== id)
+    }));
+  };
+
+  const togglePinNote = (id: string) => {
+    setCharacter(prev => ({
+      ...prev,
+      notesList: (prev.notesList || []).map(note =>
+        note.id === id ? { ...note, isPinned: !note.isPinned } : note
+      )
+    }));
+  };
+
   const exportCharacterJson = (): string => {
     return JSON.stringify(character, null, 2);
   };
@@ -411,6 +459,9 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     try {
       const parsed = JSON.parse(jsonString);
       if (parsed && parsed.name && parsed.abilities) {
+        if (!parsed.notesList) {
+          parsed.notesList = DEFAULT_CHARACTER.notesList || [];
+        }
         setCharacter(parsed);
         return true;
       }
@@ -465,6 +516,10 @@ export const CharacterProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         toggleEquipItem,
         toggleAttuneItem,
         toggleFavoriteFeature,
+        addNote,
+        updateNote,
+        deleteNote,
+        togglePinNote,
         exportCharacterJson,
         importCharacterJson,
         resetToDefault,

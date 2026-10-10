@@ -1,8 +1,8 @@
 import React from 'react';
-import { ShieldCheck, Backpack, BookOpen, Wand2 } from 'lucide-react';
+import { ShieldCheck, Backpack, BookOpen, Wand2, FileText } from 'lucide-react';
 import { useCharacter } from '../context/CharacterContext';
 
-export type TabType = 'spells' | 'stats' | 'inventory' | 'rules';
+export type TabType = 'spells' | 'stats' | 'inventory' | 'notes' | 'rules';
 
 interface NavigationProps {
   activeTab: TabType;
@@ -29,6 +29,12 @@ export const Navigation: React.FC<NavigationProps> = ({ activeTab, setActiveTab 
       label: 'Інвентар',
       icon: <Backpack size={20} />,
       badge: character.inventory.length
+    },
+    {
+      id: 'notes',
+      label: 'Нотатки',
+      icon: <FileText size={20} />,
+      badge: character.notesList && character.notesList.length > 0 ? character.notesList.length : undefined
     },
     {
       id: 'rules',
