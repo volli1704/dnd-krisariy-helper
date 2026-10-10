@@ -2648,18 +2648,22 @@
 }
 
 .modal-input, .modal-textarea {
+  width: 100%;
+  box-sizing: border-box;
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 8px 10px;
+  padding: 10px 12px;
   color: var(--text-primary);
-  font-size: 13px;
+  font-size: 13.5px;
   outline: none;
   font-family: var(--font-body);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .modal-input:focus, .modal-textarea:focus {
   border-color: var(--gold-500);
+  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
 }
 
 .form-row-2 {
@@ -4043,94 +4047,79 @@
   line-height: 1.5;
 }
 
-/* Note Modal Styling */
-.note-modal {
+/* Note Modal Content Styling */
+.note-modal-content {
   max-width: 540px;
-  width: 92%;
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  gap: 16px;
+  overflow-y: auto;
 }
 
 .note-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.category-select-chips {
+.note-category-select-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.cat-chip-select-btn {
+.note-cat-select-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
   border-radius: var(--radius-full);
-  background: var(--bg-surface);
+  background: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
+  user-select: none;
 }
 
-.cat-chip-select-btn:hover {
+.note-cat-select-btn:hover {
   border-color: var(--gold-500);
   color: var(--text-primary);
+  background: var(--bg-surface-hover);
 }
 
-.cat-chip-select-btn.active {
+.note-cat-select-btn.active {
   background: var(--gold-500);
   border-color: var(--gold-400);
   color: #090d16;
   font-weight: 700;
+  box-shadow: 0 0 10px rgba(217, 119, 6, 0.35);
 }
 
-.styled-form-textarea {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 1.5;
+.note-modal-textarea {
+  min-height: 140px;
+  line-height: 1.55;
   resize: vertical;
-  min-height: 120px;
-  box-sizing: border-box;
 }
 
-.styled-form-textarea:focus {
-  outline: none;
-  border-color: var(--gold-500);
-  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
+.note-card .note-title {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
-.form-checkbox-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.checkbox-label-custom {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  user-select: none;
-}
-
-.checkbox-label-custom input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: var(--gold-500);
-  cursor: pointer;
+.note-card .note-content {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 /* Light Theme Support */
@@ -4146,7 +4135,8 @@
   box-shadow: 0 4px 14px rgba(217, 119, 6, 0.12);
 }
 
-[data-theme="light"] .note-cat-chip {
+[data-theme="light"] .note-cat-chip,
+[data-theme="light"] .note-cat-select-btn {
   background: #f1f5f9;
   border-color: #cbd5e1;
   color: #334155;
@@ -4158,9 +4148,9 @@
   color: #334155;
 }
 
-[data-theme="light"] .styled-form-textarea {
+[data-theme="light"] .note-modal-content {
   background: #ffffff;
-  border-color: #cbd5e1;
-  color: #0f172a;
+  border-color: var(--gold-500);
 }
+
 

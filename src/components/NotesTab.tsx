@@ -316,28 +316,30 @@ export const NotesTab: React.FC = () => {
       {isModalOpen && (
         <div className="modal-backdrop animate-fadeIn" onClick={() => setIsModalOpen(false)}>
           <div 
-            className="modal-container note-modal"
+            className="modal-content note-modal-content"
             onClick={e => e.stopPropagation()}
           >
             <div className="modal-header">
-              <div className="modal-title-group">
+              <div className="modal-title-with-icon">
                 <FileText size={20} className="text-gold" />
-                <h3>{editingNoteId ? 'Редагувати нотатку' : 'Нова нотатка'}</h3>
+                <h3 className="modal-title">{editingNoteId ? 'Редагувати нотатку' : 'Нова нотатка'}</h3>
               </div>
               <button 
                 className="modal-close-btn"
                 onClick={() => setIsModalOpen(false)}
+                type="button"
+                aria-label="Закрити"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <form onSubmit={handleSaveNote} className="note-form">
+            <form onSubmit={handleSaveNote} className="modal-form note-form">
               <div className="form-group">
-                <label className="form-label">Заголовок</label>
+                <label>Заголовок нотатки</label>
                 <input
                   type="text"
-                  className="styled-form-input"
+                  className="modal-input"
                   placeholder="Наприклад: Розмова з капітаном варти, Загадка на брамі..."
                   value={formTitle}
                   onChange={e => setFormTitle(e.target.value)}
@@ -347,13 +349,13 @@ export const NotesTab: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Категорія</label>
-                <div className="category-select-chips">
+                <label>Категорія</label>
+                <div className="note-category-select-grid">
                   {CATEGORIES.filter(c => c.id !== 'all').map(cat => (
                     <button
                       type="button"
                       key={cat.id}
-                      className={`cat-chip-select-btn ${formCategory === cat.id ? 'active' : ''}`}
+                      className={`note-cat-select-btn ${formCategory === cat.id ? 'active' : ''}`}
                       onClick={() => setFormCategory(cat.id)}
                     >
                       {cat.icon}
@@ -364,38 +366,38 @@ export const NotesTab: React.FC = () => {
               </div>
 
               <div className="form-group">
-                <label className="form-label">Вміст нотатки</label>
+                <label>Вміст нотатки</label>
                 <textarea
-                  className="styled-form-textarea"
-                  placeholder="Запишіть деталі, координати, імена, плани чи здобич..."
+                  className="modal-textarea note-modal-textarea"
+                  placeholder="Запишіть деталі, координати, імена персонажів, плани чи здобич..."
                   rows={6}
                   value={formContent}
                   onChange={e => setFormContent(e.target.value)}
                 />
               </div>
 
-              <div className="form-checkbox-row">
-                <label className="checkbox-label-custom">
+              <div className="form-group checkbox-group">
+                <label className="checkbox-label">
                   <input
                     type="checkbox"
                     checked={formIsPinned}
                     onChange={e => setFormIsPinned(e.target.checked)}
                   />
-                  <span>Закріпити нотатку нагорі (Pinned)</span>
+                  <span>Закріпити нотатку зверху списку (Pinned)</span>
                 </label>
               </div>
 
-              <div className="modal-actions-footer">
+              <div className="modal-actions-row">
                 <button
                   type="button"
-                  className="action-btn secondary-btn"
+                  className="btn-cancel"
                   onClick={() => setIsModalOpen(false)}
                 >
                   Скасувати
                 </button>
                 <button
                   type="submit"
-                  className="action-btn primary-btn"
+                  className="btn-save"
                 >
                   {editingNoteId ? 'Зберегти зміни' : 'Створити нотатку'}
                 </button>
